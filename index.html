@@ -1,100 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QH Consultant</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background: #f4f4f4;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QH Consultant</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: #f4f4f4;
+  }
 
-    /* 顶端状态栏 */
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #2c2c2c;
-      color: #fff;
-      padding: 6px 15px;
-      font-size: 14px;
-    }
-    .top-bar .left {
-      font-weight: bold;
-    }
-    .top-bar .right {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
+  /* 顶端状态栏 */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2c2c2c;
+    color: #fff;
+    padding: 6px 15px;
+    font-size: 14px;
+  }
+  .top-bar .left {
+    font-weight: bold;
+  }
+  .top-bar .right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
 
-    /* 内容区布局 */
-    .content {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 80px 20px 120px;
-      max-width: 1100px;
-      margin: auto;
-      gap: 50px;
-    }
-    .content .logo {
-      flex: 0 0 250px;
-      text-align: center;
-    }
-    .content .logo img {
-      max-width: 100%;
-      border-radius: 12px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
-    }
-    .content .text {
-      flex: 1;
-      text-align: left;
-    }
-    .content h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    .content h2 {
-      margin-top: 30px;
-      font-size: 24px;
-      color: #222;
-    }
-    .content p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #555;
-      margin-bottom: 20px;
-    }
+  /* 内容区布局 */
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px 20px 120px;
+    max-width: 1100px;
+    margin: auto;
+    gap: 50px;
+  }
+  .content .logo {
+    flex: 0 0 250px;
+    text-align: center;
+  }
+  .content .logo img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  }
+  .content .text {
+    flex: 1;
+    text-align: left;
+  }
+  .content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .content h2 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #222;
+  }
+  .content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+  }
 
-    /* Dock 样式 */
-    .dock {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 25px;
-      background: rgba(255,255,255,0.85);
-      padding: 10px 20px;
-      border-radius: 20px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
-      align-items: center;
-    }
-    .dock img {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      transition: transform 0.2s;
-      cursor: pointer;
-    }
-    .dock img:hover {
-      transform: scale(1.3);
-    }
-  </style>
+  /* Dock 样式 */
+  .dock {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    background: rgba(255,255,255,0.85);
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  /* 每个 Dock 按钮 */
+  .dock-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+  }
+
+  .dock-btn img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .dock-btn span {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.2);
+    color: #222;
+    font-weight: 600;
+    font-size: 12px;
+    transition: background 0.2s, color 0.2s;
+    opacity: 0;
+    white-space: nowrap;
+    position: absolute;
+    top: -24px;
+  }
+
+  /* 悬停效果 */
+  .dock-btn:hover img {
+    transform: scale(1.3);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .dock-btn:hover span {
+    opacity: 1;
+    background: rgba(255,255,255,0.6);
+    color: #000;
+  }
+</style>
 </head>
 <body>
 
@@ -143,11 +178,26 @@
 
   <!-- 彩色 Dock -->
   <div class="dock">
-    <img src="logo.png" alt="Logo" title="Company Logo">
-    <img src="https://img.icons8.com/color/96/home-page.png" alt="About Us" title="About Us">
-    <img src="https://img.icons8.com/color/96/teamwork.png" alt="Our Team" title="Our Team">
-    <img src="https://img.icons8.com/color/96/briefcase.png" alt="What We Do" title="What We Do">
-    <img src="https://img.icons8.com/color/96/idea.png" alt="Why Choose Us" title="Why Choose Us">
+    <div class="dock-btn">
+      <img src="logo.png" alt="Logo">
+      <span>Company</span>
+    </div>
+    <div class="dock-btn">
+      <img src="https://img.icons8.com/color/96/home-page.png" alt="About Us">
+      <span>ABOUT US</span>
+    </div>
+    <div class="dock-btn">
+      <img src="https://img.icons8.com/color/96/teamwork.png" alt="Our Team">
+      <span>OUR TEAM</span>
+    </div>
+    <div class="dock-btn">
+      <img src="https://img.icons8.com/color/96/briefcase.png" alt="What We Do">
+      <span>WHAT WE DO</span>
+    </div>
+    <div class="dock-btn">
+      <img src="https://img.icons8.com/color/96/idea.png" alt="Why Choose Us">
+      <span>WHY CHOOSE US</span>
+    </div>
   </div>
 
   <script>
