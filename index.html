@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Aptitudes</title>
+  <title>QH Consulting</title>
   <style>
     * {margin:0; padding:0; box-sizing:border-box; font-family:"Helvetica Neue",Arial,sans-serif;}
     body {
@@ -11,34 +11,52 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
     }
+
+    /* 顶部状态栏 */
+    .top-bar {
+      height: 26px;
+      background: rgba(20,20,20,0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 13px;
+      color: #fff;
+    }
+    .top-left { font-weight: bold; }
+    .top-right { display:flex; align-items:center; gap:14px; }
+    .icon { font-size:14px; }
 
     /* 内容区 */
     .content {
       flex:1;
       width: 100%;
-      max-width: 900px;
+      max-width: 950px;
+      margin: 0 auto;
       padding: 40px;
-      text-align: center;
+      text-align: left;
       overflow-y: auto;
     }
-
     h1 {
-      font-size: 2.5em;
-      margin-bottom: 20px;
+      font-size: 2em;
+      margin: 20px 0 15px;
       color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
-
-    p {
-      font-size: 1.2em;
+    h3 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+      color: #f0f0f0;
+    }
+    p, li {
+      font-size: 1.1em;
       line-height: 1.7em;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       color: #e0e0e0;
     }
+    ul { margin-left:20px; }
 
     /* Dock */
     .mac-dock {
@@ -48,7 +66,6 @@
       transform: translateX(-50%);
       z-index: 1000;
     }
-
     .dock-icons {
       display: flex;
       gap: 18px;
@@ -58,28 +75,20 @@
       box-shadow: 0 8px 25px rgba(0,0,0,0.6);
       backdrop-filter: blur(12px);
     }
-
     .dock-btn {
       position: relative;
       cursor: pointer;
       transition: transform 0.25s ease;
     }
-
     .dock-btn img {
       width: 46px;
       height: 46px;
       border-radius: 10px;
     }
-
-    .dock-btn:hover {
-      transform: scale(1.25);
-    }
-
+    .dock-btn:hover { transform: scale(1.25); }
     .dock-btn.active img {
       filter: brightness(1.2) drop-shadow(0 0 6px rgba(255,255,255,0.4));
     }
-
-    /* 悬停提示文字 */
     .dock-btn:hover::after {
       content: attr(data-label);
       position: absolute;
@@ -97,19 +106,27 @@
   </style>
 </head>
 <body>
+  <!-- 顶部状态栏 -->
+  <div class="top-bar">
+    <div class="top-left">QH Consultant</div>
+    <div class="top-right">
+      <span class="icon">📶</span>
+      <span class="icon">🔋</span>
+      <span id="datetime"></span>
+    </div>
+  </div>
+
+  <!-- 内容区 -->
   <div class="content" id="content">
-    <h1>Welcome to Aptitudes</h1>
-    <p>We help businesses transform their warehouse operations with tailored consulting, cutting-edge systems, and practical strategies.  
-    Efficiency and clarity are at the heart of everything we do.</p>
+    <h1>Welcome to QihaiGroup</h1>
+    <p>Your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes.</p>
+    <p>At QihaiGroup, we specialize in two core areas: accounting and IT services. With a team of seasoned professionals and cutting-edge technology, we offer a comprehensive suite of services to meet your unique needs.</p>
   </div>
 
   <!-- Dock -->
   <div class="mac-dock">
     <div class="dock-icons">
-      <div class="dock-btn active" data-key="home" data-label="Home">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Home"/>
-      </div>
-      <div class="dock-btn" data-key="about" data-label="About Us">
+      <div class="dock-btn active" data-key="about" data-label="About Us">
         <img src="https://img.icons8.com/ios-filled/50/ffffff/info.png" alt="About"/>
       </div>
       <div class="dock-btn" data-key="team" data-label="Our Team">
@@ -125,35 +142,50 @@
   </div>
 
   <script>
+    // 顶部时间更新
+    function updateTime(){
+      const now = new Date();
+      const options = { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'};
+      document.getElementById('datetime').textContent = now.toLocaleDateString('en-US', options);
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // 内容数据
     const pages = {
-      home: `
-        <h1>Welcome to Aptitudes</h1>
-        <p>We help businesses transform their warehouse operations with tailored consulting, cutting-edge systems, and practical strategies.</p>
-        <p>Efficiency and clarity are at the heart of everything we do.</p>
-      `,
       about: `
         <h1>About Us</h1>
-        <p>Aptitudes is a consulting company dedicated to warehouse management and process optimization.</p>
-        <p>We combine technology and operational expertise to solve real business challenges.</p>
+        <p>Welcome to QihaiGroup, your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes.</p>
+        <p>At QihaiGroup, we specialize in two core areas: accounting and IT services. With a team of seasoned professionals and cutting-edge technology, we offer a comprehensive suite of services to meet your unique needs.</p>
       `,
       team: `
         <h1>Our Team</h1>
-        <p>Our consultants bring years of hands-on experience in logistics, supply chain, and systems implementation.</p>
-        <p>We believe in collaboration and measurable impact.</p>
+        <ul>
+          <li><b>Expertise:</b> Our team members are experts in their respective fields and continuously enhance their knowledge to stay ahead of the curve.</li>
+          <li><b>Collaboration:</b> We believe in the power of teamwork and cooperation, which is essential to achieving our goals.</li>
+          <li><b>Client-Centric Approach:</b> Every team member is focused on delivering value to our clients, understanding their unique needs and providing tailored solutions.</li>
+          <li><b>Innovation:</b> We foster a culture of innovation and creativity to solve complex problems and drive the company forward.</li>
+        </ul>
       `,
       what: `
         <h1>What We Do</h1>
-        <p>✔ Warehouse system consulting</p>
-        <p>✔ Process analysis and optimization</p>
-        <p>✔ Implementation support and training</p>
+        <h3>Accounting Services</h3>
+        <p>Our accounting services are designed to streamline your financial operations. Whether you need assistance with bookkeeping, financial & tax reporting, payroll management, business & family financial and tax consultant, personal tax return, or US tax services, our team of experienced accountants ensures accuracy and compliance with industry standards.</p>
+        <h3>IT Services</h3>
+        <p>In an increasingly digital world, IT is the backbone of any successful business. Our IT services cover a wide range of solutions, including network management, cybersecurity, software development, and IT consulting. We provide the technical expertise to keep your operations running smoothly and securely.</p>
       `,
       why: `
         <h1>Why Choose Us</h1>
-        <p>We deliver practical, results-oriented solutions that improve efficiency and reduce costs.</p>
-        <p>Our approach is collaborative, transparent, and focused on long-term success.</p>
+        <ul>
+          <li><b>Expert Team:</b> Our professionals are highly skilled and well-versed in the latest industry trends, ensuring you receive top-notch services.</li>
+          <li><b>Custom Solutions:</b> We tailor our services to your specific business needs, providing a personalized approach to every client.</li>
+          <li><b>Reliability:</b> We are committed to delivering reliable and timely services to support your business growth.</li>
+          <li><b>Affordability:</b> We provide cost-effective solutions to maximize your return on investment.</li>
+        </ul>
       `
     };
 
+    // Dock 切换
     const dockBtns = document.querySelectorAll(".dock-btn");
     const content = document.getElementById("content");
 
