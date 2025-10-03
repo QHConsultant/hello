@@ -78,15 +78,8 @@
 <div class="mac-frame">
   <div class="top-bar">
     <div class="top-left">
-      <div class="traffic">
-        <span class="red"></span>
-        <span class="yellow"></span>
-        <span class="green"></span>
-      </div>
-      <div class="brand">
-        QH Consultant
-        <small>Consulting & Warehouse Systems</small>
-      </div>
+      <div class="traffic"><span class="red"></span><span class="yellow"></span><span class="green"></span></div>
+      <div class="brand">QH Consultant<small>Consulting & Warehouse Systems</small></div>
     </div>
     <div class="top-right">
       <div class="sys-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 8.5C6 4.8 11 2.5 17 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/></svg></div>
@@ -106,7 +99,7 @@
       </nav>
 
       <section class="main">
-        <div class="logo-container" id="home-content">
+        <div id="home-content" class="logo-container">
           <img src="logo.png" alt="QH Logo"/>
           <h1>Your Partner in Smart Consulting</h1>
         </div>
@@ -127,14 +120,10 @@
 </div>
 
 <script>
-function updateClock(){
-  const el = document.getElementById('clock');
-  const now = new Date();
-  el.textContent = String(now.getHours()).padStart(2,'0')+":"+String(now.getMinutes()).padStart(2,'0');
-}
-updateClock(); setInterval(updateClock,60000);
+function updateClock(){const el=document.getElementById('clock');const now=new Date();el.textContent=String(now.getHours()).padStart(2,'0')+":"+String(now.getMinutes()).padStart(2,'0');}
+updateClock();setInterval(updateClock,60000);
 
-const pages = {
+const pages={
   about:{html:`<h3>Welcome to QihaiGroup</h3>
 <p>Your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes.</p>
 <p>At QihaiGroup, we specialize in two core areas:</p>
@@ -177,8 +166,8 @@ function setActive(key){
   document.querySelectorAll('.dock-btn').forEach(b=>b.classList.toggle('active',b.dataset.key===key));
   document.querySelectorAll('.dock .menu-item').forEach(mi=>mi.classList.toggle('active',mi.dataset.key===key));
   document.getElementById('home-content').style.display = key==='home'?'block':'none';
-  const bodyEl = document.getElementById('page-body');
-  if(key!=='home'){bodyEl.style.display='block'; bodyEl.innerHTML = pages[key].html; initCharts(key);}
+  const bodyEl=document.getElementById('page-body');
+  if(key!=='home'){bodyEl.style.display='block';bodyEl.innerHTML=pages[key].html;initCharts(key);}
   else bodyEl.style.display='none';
 }
 document.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('click',()=>setActive(el.dataset.key)));
@@ -188,26 +177,26 @@ function initCharts(key){
   if(key==='about'){
     new Chart(document.getElementById('aboutChart'),{
       type:'bar',
-      data:{labels:['Accounting','IT Services'], datasets:[{label:'Focus',data:[80,70],backgroundColor:['#9ad0ff','#28ca41']}]},
-      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+      data:{labels:['Accounting','IT Services'],datasets:[{label:'Focus',data:[80,70],backgroundColor:['#9ad0ff','#28ca41'],borderRadius:6}]},
+      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}},animation:{duration:1000,easing:'easeOutQuart'}}
     });
   } else if(key==='team'){
     new Chart(document.getElementById('teamChart'),{
       type:'pie',
       data:{labels:['Expertise','Collaboration','Client-Centric','Innovation'],datasets:[{data:[25,25,25,25],backgroundColor:['#9ad0ff','#28ca41','#ffbd2e','#ff605c']}]},
-      options:{responsive:true}
+      options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#e6e6e6'}}},animation:{duration:1000,easing:'easeOutQuart'}}
     });
   } else if(key==='what'){
     new Chart(document.getElementById('whatChart'),{
       type:'bar',
-      data:{labels:['Bookkeeping','Payroll','Consulting','IT Services'],datasets:[{label:'Services',data:[70,60,80,75],backgroundColor:'#28ca41'}]},
-      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+      data:{labels:['Bookkeeping','Payroll','Consulting','IT Services'],datasets:[{label:'Services',data:[70,60,80,75],backgroundColor:'#28ca41',borderRadius:6}]},
+      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}},animation:{duration:1000,easing:'easeOutQuart'}}
     });
   } else if(key==='why'){
     new Chart(document.getElementById('whyChart'),{
       type:'doughnut',
-      data:{labels:['Expert Team','Custom Solutions','Reliability','Affordability'],datasets:[{data:[25,25,25,25],backgroundColor:['#9ad0ff','#28ca41','#ffbd2e','#ff605c']}]},
-      options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#e6e6e6'}}}}
+      data:{labels:['Expert Team','Custom Solutions','Reliability','Affordability'],datasets:[{data:[25,25,25,25],backgroundColor:['#9ad0ff','#28ca41','#ffbd2e','#ff605c'],borderRadius:6}]},
+      options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#e6e6e6'}}},animation:{duration:1000,easing:'easeOutQuart'}}
     });
   }
 }
