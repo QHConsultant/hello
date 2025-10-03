@@ -1,238 +1,170 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>QH Consultant — About</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <title>Aptitudes</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;width:100%;overflow:hidden}
-    body{
-      background:linear-gradient(180deg,#0b0b0d 0%, #0f0f11 60%);
-      color:#e6e6e6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial;
-      -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;
+    * {margin:0; padding:0; box-sizing:border-box; font-family:"Helvetica Neue",Arial,sans-serif;}
+    body {
+      background: linear-gradient(135deg,#1e1e2f,#2b2b3c);
+      color: #f5f5f5;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
 
-    /* Mac-like frame full screen */
-    .mac-frame{
-      width:100vw;
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    }
-
-    /* Top menu bar */
-    .top-bar{
-      height:44px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 12px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      backdrop-filter:blur(6px);
-      flex-shrink:0;
-    }
-    .top-left{display:flex;align-items:center;gap:12px}
-    .traffic{display:flex;gap:8px;align-items:center;padding-left:6px}
-    .traffic span{width:12px;height:12px;border-radius:50%;display:inline-block;box-shadow:0 1px 0 rgba(0,0,0,0.6) inset}
-    .red{background:#ff605c}
-    .yellow{background:#ffbd2e}
-    .green{background:#28ca41}
-    .brand{font-weight:600;letter-spacing:0.6px}
-    .brand small{display:block;font-size:11px;color:rgba(230,230,230,0.6);font-weight:400}
-    .top-right{display:flex;align-items:center;gap:12px;color:rgba(230,230,230,0.8);font-size:13px}
-    .sys-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)}
-
-    /* Content area full height */
-    .content-area{flex:1;display:flex;height:calc(100% - 44px)}
-
-    .screen{
+    /* 内容区 */
+    .content {
       flex:1;
-      display:flex;
-      overflow:hidden;
-      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      width: 100%;
+      max-width: 900px;
+      padding: 40px;
+      text-align: center;
+      overflow-y: auto;
     }
 
-    /* Sidebar / Dock */
-    .dock{
-      width:180px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:12px;
-      padding:18px;
-      border-right:1px solid rgba(255,255,255,0.02);
-      height:100%;
-      flex-shrink:0;
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
-    .dock .menu-item{
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:600;
-      color:#d9d9d9;
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.7em;
+      margin-bottom: 16px;
+      color: #e0e0e0;
     }
-    .dock .menu-item:hover{background:rgba(255,255,255,0.02)}
-    .dock .menu-item.active{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 6px 20px rgba(0,0,0,0.6) inset}
-    .dock .menu-icon{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-size:14px}
 
-    /* Main content */
-    .main{flex:1;padding:28px;display:flex;flex-direction:column;gap:18px;overflow:auto}
-    .title{font-size:22px;font-weight:700}
-    .subtitle{font-size:13px;color:rgba(230,230,230,0.7)}
-    .body{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:18px;border-radius:8px;overflow:auto;border:1px solid rgba(255,255,255,0.015)}
+    /* Dock */
+    .mac-dock {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
 
-    /* Mac dock bottom */
-    .mac-dock{height:76px;background:transparent;display:flex;align-items:center;justify-content:center;padding-bottom:10px}
-    .dock-icons{display:flex;gap:20px;padding:8px 16px;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
-    .dock-icons .dock-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 10px;border-radius:10px;cursor:pointer;color:#e6e6e6;font-weight:600}
-    .dock-icons .dock-btn img{width:38px;height:38px;border-radius:8px}
-    .dock-icons .dock-btn.active{transform:translateY(-6px);filter:brightness(1.15)}
+    .dock-icons {
+      display: flex;
+      gap: 18px;
+      padding: 10px 20px;
+      background: rgba(30,30,30,0.6);
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+    }
 
-    /* Logo page */
-    .logo-container{text-align:center;margin-top:40px;width:100%}
-    .logo-container img{max-width:160px;height:auto;margin-bottom:12px;}
-    .logo-container h1{font-size:22px;color:#9ad0ff;font-weight:500}
-    .body h3{color:#9ad0ff;margin-bottom:12px;}
-    .body ul, .body ol{padding-left:20px; margin-bottom:12px;}
-    .body li{margin-bottom:6px;line-height:1.5}
-    canvas{background:rgba(255,255,255,0.03);border-radius:8px;padding:8px;box-shadow:0 4px 15px rgba(0,0,0,0.4);}
+    .dock-btn {
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+
+    .dock-btn img {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+    }
+
+    .dock-btn:hover {
+      transform: scale(1.25);
+    }
+
+    .dock-btn.active img {
+      filter: brightness(1.2) drop-shadow(0 0 6px rgba(255,255,255,0.4));
+    }
+
+    /* 悬停提示文字 */
+    .dock-btn:hover::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 8px;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-size: 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
-<div class="mac-frame">
-  <div class="top-bar">
-    <div class="top-left">
-      <div class="traffic"><span class="red"></span><span class="yellow"></span><span class="green"></span></div>
-      <div class="brand">QH Consultant<small>Consulting & Warehouse Systems</small></div>
-    </div>
-    <div class="top-right">
-      <div class="sys-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 8.5C6 4.8 11 2.5 17 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/></svg></div>
-      <div class="sys-item"><svg width="16" height="14" viewBox="0 0 24 24" fill="none"><rect x="1" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><rect x="20" y="9" width="2" height="6" rx="1" fill="currentColor"/></svg></div>
-      <div class="sys-item" id="clock">12:00</div>
-    </div>
+  <div class="content" id="content">
+    <h1>Welcome to Aptitudes</h1>
+    <p>We help businesses transform their warehouse operations with tailored consulting, cutting-edge systems, and practical strategies.  
+    Efficiency and clarity are at the heart of everything we do.</p>
   </div>
 
-  <div class="content-area">
-    <div class="screen">
-      <nav class="dock">
-        <div class="menu-item active" data-key="home"><div class="menu-icon">H</div>HOME</div>
-        <div class="menu-item" data-key="about"><div class="menu-icon">A</div>ABOUT US</div>
-        <div class="menu-item" data-key="team"><div class="menu-icon">T</div>OUR TEAM</div>
-        <div class="menu-item" data-key="what"><div class="menu-icon">W</div>WHAT WE DO</div>
-        <div class="menu-item" data-key="why"><div class="menu-icon">Q</div>Why Choose Us</div>
-      </nav>
-
-      <section class="main">
-        <div id="home-content" class="logo-container">
-          <img src="logo.png" alt="QH Logo"/>
-          <h1>Your Partner in Smart Consulting</h1>
-        </div>
-        <div class="body card" id="page-body" style="display:none"></div>
-      </section>
-    </div>
-  </div>
-
+  <!-- Dock -->
   <div class="mac-dock">
     <div class="dock-icons">
-      <button class="dock-btn active" data-key="home">HOME</button>
-      <button class="dock-btn" data-key="about">ABOUT</button>
-      <button class="dock-btn" data-key="team">TEAM</button>
-      <button class="dock-btn" data-key="what">WHAT</button>
-      <button class="dock-btn" data-key="why">WHY</button>
+      <div class="dock-btn active" data-key="home" data-label="Home">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Home"/>
+      </div>
+      <div class="dock-btn" data-key="about" data-label="About Us">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/info.png" alt="About"/>
+      </div>
+      <div class="dock-btn" data-key="team" data-label="Our Team">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/conference.png" alt="Team"/>
+      </div>
+      <div class="dock-btn" data-key="what" data-label="What We Do">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/task.png" alt="What"/>
+      </div>
+      <div class="dock-btn" data-key="why" data-label="Why Choose Us">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/like.png" alt="Why"/>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-function updateClock(){const el=document.getElementById('clock');const now=new Date();el.textContent=String(now.getHours()).padStart(2,'0')+":"+String(now.getMinutes()).padStart(2,'0');}
-updateClock();setInterval(updateClock,60000);
+  <script>
+    const pages = {
+      home: `
+        <h1>Welcome to Aptitudes</h1>
+        <p>We help businesses transform their warehouse operations with tailored consulting, cutting-edge systems, and practical strategies.</p>
+        <p>Efficiency and clarity are at the heart of everything we do.</p>
+      `,
+      about: `
+        <h1>About Us</h1>
+        <p>Aptitudes is a consulting company dedicated to warehouse management and process optimization.</p>
+        <p>We combine technology and operational expertise to solve real business challenges.</p>
+      `,
+      team: `
+        <h1>Our Team</h1>
+        <p>Our consultants bring years of hands-on experience in logistics, supply chain, and systems implementation.</p>
+        <p>We believe in collaboration and measurable impact.</p>
+      `,
+      what: `
+        <h1>What We Do</h1>
+        <p>✔ Warehouse system consulting</p>
+        <p>✔ Process analysis and optimization</p>
+        <p>✔ Implementation support and training</p>
+      `,
+      why: `
+        <h1>Why Choose Us</h1>
+        <p>We deliver practical, results-oriented solutions that improve efficiency and reduce costs.</p>
+        <p>Our approach is collaborative, transparent, and focused on long-term success.</p>
+      `
+    };
 
-const pages={
-  about:{html:`<h3>Welcome to QihaiGroup</h3>
-<p>Your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes.</p>
-<p>At QihaiGroup, we specialize in two core areas:</p>
-<ul><li>Accounting</li><li>IT Services</li></ul>
-<canvas id="aboutChart" height="150"></canvas>`},
-  team:{html:`<h3>OUR TEAM</h3>
-<ul>
-<li>Expertise: Our team members are experts in their respective fields and continuously enhance their knowledge to stay ahead of the curve.</li>
-<li>Collaboration: We believe in the power of teamwork and cooperation, essential to achieving our goals.</li>
-<li>Client-Centric Approach: Every team member is focused on delivering value to our clients.</li>
-<li>Innovation: We foster a culture of innovation and creativity to solve complex problems and drive the company forward.</li>
-</ul>
-<canvas id="teamChart" height="150"></canvas>`},
-  what:{html:`<h3>Accounting Services</h3>
-<ul>
-<li>Bookkeeping, financial & tax reporting</li>
-<li>Payroll management</li>
-<li>Business & family financial consultant</li>
-<li>Personal tax return, US tax services</li>
-</ul>
-<h3>IT Services</h3>
-<ul>
-<li>Network management</li>
-<li>Cybersecurity</li>
-<li>Software development</li>
-<li>IT consulting</li>
-</ul>
-<canvas id="whatChart" height="150"></canvas>`},
-  why:{html:`<h3>WHY CHOOSE US</h3>
-<ul>
-<li>Expert Team: Highly skilled and up-to-date.</li>
-<li>Custom Solutions: Tailored to your business.</li>
-<li>Reliability: Timely and dependable services.</li>
-<li>Affordability: Cost-effective solutions.</li>
-</ul>
-<canvas id="whyChart" height="150"></canvas>`}
-};
+    const dockBtns = document.querySelectorAll(".dock-btn");
+    const content = document.getElementById("content");
 
-function setActive(key){
-  document.querySelectorAll('.dock-btn').forEach(b=>b.classList.toggle('active',b.dataset.key===key));
-  document.querySelectorAll('.dock .menu-item').forEach(mi=>mi.classList.toggle('active',mi.dataset.key===key));
-  document.getElementById('home-content').style.display = key==='home'?'block':'none';
-  const bodyEl=document.getElementById('page-body');
-  if(key!=='home'){bodyEl.style.display='block';bodyEl.innerHTML=pages[key].html;initCharts(key);}
-  else bodyEl.style.display='none';
-}
-document.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('click',()=>setActive(el.dataset.key)));
-setActive('home');
-
-function initCharts(key){
-  if(key==='about'){
-    new Chart(document.getElementById('aboutChart'),{
-      type:'bar',
-      data:{labels:['Accounting','IT Services'],datasets:[{label:'Focus',data:[80,70],backgroundColor:['#9ad0ff','#28ca41'],borderRadius:6}]},
-      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}},animation:{duration:1000,easing:'easeOutQuart'}}
+    dockBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        dockBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const key = btn.getAttribute("data-key");
+        content.innerHTML = pages[key];
+      });
     });
-  } else if(key==='team'){
-    new Chart(document.getElementById('teamChart'),{
-      type:'pie',
-      data:{labels:['Expertise','Collaboration','Client-Centric','Innovation'],datasets:[{data:[25,25,25,25],backgroundColor:['#9ad0ff','#28ca41','#ffbd2e','#ff605c']}]},
-      options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#e6e6e6'}}},animation:{duration:1000,easing:'easeOutQuart'}}
-    });
-  } else if(key==='what'){
-    new Chart(document.getElementById('whatChart'),{
-      type:'bar',
-      data:{labels:['Bookkeeping','Payroll','Consulting','IT Services'],datasets:[{label:'Services',data:[70,60,80,75],backgroundColor:'#28ca41',borderRadius:6}]},
-      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}},animation:{duration:1000,easing:'easeOutQuart'}}
-    });
-  } else if(key==='why'){
-    new Chart(document.getElementById('whyChart'),{
-      type:'doughnut',
-      data:{labels:['Expert Team','Custom Solutions','Reliability','Affordability'],datasets:[{data:[25,25,25,25],backgroundColor:['#9ad0ff','#28ca41','#ffbd2e','#ff605c'],borderRadius:6}]},
-      options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#e6e6e6'}}},animation:{duration:1000,easing:'easeOutQuart'}}
-    });
-  }
-}
-</script>
+  </script>
 </body>
 </html>
