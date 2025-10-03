@@ -31,7 +31,7 @@
     justify-content: center;
     align-items: flex-start;
     padding: 100px 20px 150px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
     gap: 50px;
   }
@@ -47,6 +47,9 @@
   .content .text {
     flex: 1;
     text-align: left;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 10px;
   }
   .content h1 {
     font-size: 36px;
@@ -58,19 +61,19 @@
     font-size: 24px;
     color: #ccc;
   }
-  .content p { font-size: 18px; line-height: 1.6; color: #aaa; margin-bottom: 20px; }
+  .content p { font-size: 18px; line-height: 1.6; color: #aaa; margin-bottom: 15px; }
 
   /* 卡片样式 */
   .card {
     background: rgba(255,255,255,0.05);
     padding: 20px;
     border-radius: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     display: flex;
     gap: 15px;
     align-items: flex-start;
   }
-  .card img { width: 50px; height: 50px; }
+  .card img { width: 50px; height: 50px; flex-shrink: 0; }
 
   /* Dock 样式 */
   .dock {
@@ -164,23 +167,23 @@
   // 页面内容
   const pages = {
     about: `<h1>ABOUT US</h1>
-            <div class="card"><img src="https://img.icons8.com/color/64/home-page.png"><p>Welcome to QihaiGroup, your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes. We specialize in accounting and IT services, offering a comprehensive suite to meet your unique needs.</p></div>`,
+            <div class="card"><img src="https://img.icons8.com/color/64/home-page.png"><p>Welcome to QihaiGroup, your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes.</p><p>At QihaiGroup, we specialize in two core areas: accounting and IT services. With a team of seasoned professionals and cutting-edge technology, we offer a comprehensive suite of services to meet your unique needs.</p></div>`,
 
     team: `<h1>OUR TEAM</h1>
-           <div class="card"><img src="https://img.icons8.com/color/64/teamwork.png"><p>Expertise: Our team members are experts in their respective fields and continuously enhance their knowledge.</p></div>
-           <div class="card"><img src="https://img.icons8.com/color/64/handshake.png"><p>Collaboration: We believe in the power of teamwork and cooperation.</p></div>
-           <div class="card"><img src="https://img.icons8.com/color/64/user.png"><p>Client-Centric Approach: Every team member is focused on delivering value to our clients.</p></div>
-           <div class="card"><img src="https://img.icons8.com/color/64/idea.png"><p>Innovation: We foster a culture of innovation and creativity to solve complex problems and drive the company forward.</p></div>`,
+           <div class="card"><img src="https://img.icons8.com/color/64/expertise.png"><p>Expertise: Our team members are experts in their respective fields and continuously enhance their knowledge to stay ahead.</p></div>
+           <div class="card"><img src="https://img.icons8.com/color/64/collaboration.png"><p>Collaboration: We believe in the power of teamwork and cooperation, which is essential to achieving our goals.</p></div>
+           <div class="card"><img src="https://img.icons8.com/color/64/client.png"><p>Client-Centric Approach: Every team member is focused on delivering value to our clients, understanding their unique needs and providing tailored solutions.</p></div>
+           <div class="card"><img src="https://img.icons8.com/color/64/innovation.png"><p>Innovation: We foster a culture of innovation and creativity to solve complex problems and drive the company forward.</p></div>`,
 
     what: `<h1>WHAT WE DO</h1>
-           <div class="card"><img src="https://img.icons8.com/color/64/briefcase.png"><p><strong>Accounting Services:</strong> bookkeeping, financial & tax reporting, payroll management, business & family financial and tax consulting, personal tax return, US tax services.</p></div>
-           <div class="card"><img src="https://img.icons8.com/color/64/computer.png"><p><strong>IT Services:</strong> network management, cybersecurity, software development, IT consulting.</p></div>`,
+           <div class="card"><img src="https://img.icons8.com/color/64/financial.png"><p><strong>Accounting Services:</strong> Our accounting services are designed to streamline your financial operations. Whether you need assistance with bookkeeping, financial & tax reporting, payroll management, business & family financial and tax consulting, personal tax return, US tax services, our team of experienced accountants ensures accuracy and compliance with industry standards.</p></div>
+           <div class="card"><img src="https://img.icons8.com/color/64/it.png"><p><strong>IT Services:</strong> In an increasingly digital world, IT is the backbone of any successful business. Our IT services cover a wide range of solutions, including network management, cybersecurity, software development, and IT consulting. We provide the technical expertise to keep your operations running smoothly and securely.</p></div>`,
 
     why: `<h1>WHY CHOOSE US</h1>
-           <div class="card"><img src="https://img.icons8.com/color/64/conference.png"><p>Expert Team – highly skilled professionals</p></div>
-           <div class="card"><img src="https://img.icons8.com/color/64/handshake.png"><p>Custom Solutions – tailored to your business needs</p></div>
-           <div class="card"><img src="https://img.icons8.com/color/64/bulb.png"><p>Reliability – timely and accurate</p></div>
-           <div class="card"><img src="https://img.icons8.com/color/64/money.png"><p>Affordability – cost-effective solutions</p></div>`
+           <div class="card"><img src="https://img.icons8.com/color/64/expert.png"><p><strong>Expert Team:</strong> Our professionals are highly skilled and well-versed in the latest industry trends, ensuring you receive top-notch services.</p></div>
+           <div class="card"><img src="https://img.icons8.com/color/64/custom.png"><p><strong>Custom Solutions:</strong> We tailor our services to your specific business needs, providing a personalized approach to every client.</p></div>
+           <div class="card"><img src="https://img.icons8.com/color/64/reliability.png"><p><strong>Reliability:</strong> We are committed to delivering reliable and timely services to support your business growth.</p></div>
+           <div class="card"><img src="https://img.icons8.com/color/64/affordable.png"><p><strong>Affordability:</strong> We provide cost-effective solutions to maximize your return on investment.</p></div>`
   };
 
   const dockBtns = document.querySelectorAll(".dock-btn");
