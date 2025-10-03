@@ -7,67 +7,100 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    html,body{height:100%;width:100%;overflow:hidden}
     body{
       background:linear-gradient(180deg,#0b0b0d 0%, #0f0f11 60%);
-      color:#e6e6e6;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:24px
+      color:#e6e6e6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+      -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;
     }
 
+    /* Mac-like frame full screen */
     .mac-frame{
-      width:980px;max-width:96vw;height:620px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px;box-shadow:0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-      overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.03)
+      width:100vw;
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     }
 
-    .top-bar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));backdrop-filter:blur(6px)}
+    /* Top menu bar */
+    .top-bar{
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      backdrop-filter:blur(6px);
+      flex-shrink:0;
+    }
     .top-left{display:flex;align-items:center;gap:12px}
     .traffic{display:flex;gap:8px;align-items:center;padding-left:6px}
     .traffic span{width:12px;height:12px;border-radius:50%;display:inline-block;box-shadow:0 1px 0 rgba(0,0,0,0.6) inset}
     .red{background:#ff605c}
     .yellow{background:#ffbd2e}
     .green{background:#28ca41}
-
     .brand{font-weight:600;letter-spacing:0.6px}
     .brand small{display:block;font-size:11px;color:rgba(230,230,230,0.6);font-weight:400}
-
     .top-right{display:flex;align-items:center;gap:12px;color:rgba(230,230,230,0.8);font-size:13px}
     .sys-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)}
 
-    .content-area{flex:1;display:flex;align-items:center;justify-content:center;padding:26px}
-    .screen{width:92%;height:86%;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.6);display:flex;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
+    /* Content area full height */
+    .content-area{flex:1;display:flex;height:calc(100% - 44px)}
 
-    .dock{
-      width:160px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;border-right:1px solid rgba(255,255,255,0.02)
+    .screen{
+      flex:1;
+      display:flex;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
     }
-    .dock .menu-item{width:100%;padding:10px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:600;color:#d9d9d9}
+
+    /* Sidebar / Dock */
+    .dock{
+      width:180px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:12px;
+      padding:18px;
+      border-right:1px solid rgba(255,255,255,0.02);
+      height:100%;
+      flex-shrink:0;
+    }
+    .dock .menu-item{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:600;
+      color:#d9d9d9;
+    }
     .dock .menu-item:hover{background:rgba(255,255,255,0.02)}
     .dock .menu-item.active{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 6px 20px rgba(0,0,0,0.6) inset}
     .dock .menu-icon{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-size:14px}
 
+    /* Main content */
     .main{flex:1;padding:28px;display:flex;flex-direction:column;gap:18px;overflow:auto}
     .title{font-size:22px;font-weight:700}
     .subtitle{font-size:13px;color:rgba(230,230,230,0.7)}
     .body{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:18px;border-radius:8px;overflow:auto;border:1px solid rgba(255,255,255,0.015)}
 
+    /* Mac dock bottom */
     .mac-dock{height:76px;background:transparent;display:flex;align-items:center;justify-content:center;padding-bottom:10px}
     .dock-icons{display:flex;gap:20px;padding:8px 16px;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
     .dock-icons .dock-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 10px;border-radius:10px;cursor:pointer;color:#e6e6e6;font-weight:600}
     .dock-icons .dock-btn img{width:38px;height:38px;border-radius:8px}
     .dock-icons .dock-btn.active{transform:translateY(-6px);filter:brightness(1.15)}
 
-    @media (max-width:640px){
-      .mac-frame{height:720px;flex-direction:column}
-      .dock{width:100%;flex-direction:row;overflow:auto;border-right:none;border-bottom:1px solid rgba(255,255,255,0.02)}
-    }
-
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-    a.link{color:#9ad0ff;text-decoration:none}
-
-    .logo-container{text-align:center;margin-top:40px}
-    .logo-container img{max-width:120px;height:auto;margin-bottom:12px;}
-    .logo-container h1{font-size:18px;color:#9ad0ff;font-weight:500}
-
+    /* Logo page */
+    .logo-container{text-align:center;margin-top:40px;width:100%}
+    .logo-container img{max-width:160px;height:auto;margin-bottom:12px;}
+    .logo-container h1{font-size:22px;color:#9ad0ff;font-weight:500}
     .body h3{color:#9ad0ff;margin-bottom:12px;}
     .body ul, .body ol{padding-left:20px; margin-bottom:12px;}
     .body li{margin-bottom:6px;line-height:1.5}
