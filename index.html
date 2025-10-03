@@ -1,180 +1,216 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QH Consultant</title>
-<style>
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #1e1e1e;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QH Consultant — About</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      background:linear-gradient(180deg,#0b0b0d 0%, #0f0f11 60%);
+      color:#e6e6e6;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:24px
+    }
 
-  /* Top bar (Mac style) */
-  .top-bar {
-    height: 28px;
-    background: #2b2b2b;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    font-size: 14px;
-  }
-  .top-left { font-weight: bold; }
-  .top-right span { margin-left: 10px; }
+    .mac-frame{
+      width:980px;max-width:96vw;height:620px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;box-shadow:0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.03)
+    }
 
-  /* Main content */
-  .content {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 30px;
-    overflow-y: auto;
-  }
-  .content h1 { font-size: 2em; margin-bottom: 15px; }
-  .content h2 { font-size: 1.5em; margin-top: 20px; color: #4da3ff; }
-  .content p { margin: 10px 0; line-height: 1.6; }
-  .content ul {
-    list-style: none;
-    padding: 0;
-    margin: 15px auto;
-    text-align: left;
-    max-width: 600px;
-  }
-  .content ul li {
-    background: rgba(255,255,255,0.05);
-    padding: 10px 15px;
-    margin: 8px 0;
-    border-radius: 8px;
-  }
+    .top-bar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));backdrop-filter:blur(6px)}
+    .top-left{display:flex;align-items:center;gap:12px}
+    .traffic{display:flex;gap:8px;align-items:center;padding-left:6px}
+    .traffic span{width:12px;height:12px;border-radius:50%;display:inline-block;box-shadow:0 1px 0 rgba(0,0,0,0.6) inset}
+    .red{background:#ff605c}
+    .yellow{background:#ffbd2e}
+    .green{background:#28ca41}
 
-  /* Dock */
-  .dock {
-    height: 80px;
-    background: rgba(40,40,40,0.6);
-    backdrop-filter: blur(12px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    padding: 10px;
-    border-top: 1px solid #444;
-  }
-  .dock button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    transition: transform 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #fff;
-    font-size: 12px;
-  }
-  .dock button:hover { transform: scale(1.2); }
-  .dock svg { width: 32px; height: 32px; fill: #fff; margin-bottom: 5px; }
+    .brand{font-weight:600;letter-spacing:0.6px}
+    .brand small{display:block;font-size:11px;color:rgba(230,230,230,0.6);font-weight:400}
 
-  /* Center logo + slogan */
-  .logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .logo-container svg { margin-bottom: 15px; }
-</style>
+    .top-right{display:flex;align-items:center;gap:12px;color:rgba(230,230,230,0.8);font-size:13px}
+    .sys-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)}
+
+    .content-area{flex:1;display:flex;align-items:center;justify-content:center;padding:26px}
+    .screen{width:92%;height:86%;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.6);display:flex;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
+
+    .dock{
+      width:160px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;border-right:1px solid rgba(255,255,255,0.02)
+    }
+    .dock .menu-item{width:100%;padding:10px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:600;color:#d9d9d9}
+    .dock .menu-item:hover{background:rgba(255,255,255,0.02)}
+    .dock .menu-item.active{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 6px 20px rgba(0,0,0,0.6) inset}
+    .dock .menu-icon{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-size:14px}
+
+    .main{flex:1;padding:28px;display:flex;flex-direction:column;gap:18px;overflow:auto}
+    .title{font-size:22px;font-weight:700}
+    .subtitle{font-size:13px;color:rgba(230,230,230,0.7)}
+    .body{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:18px;border-radius:8px;overflow:auto;border:1px solid rgba(255,255,255,0.015)}
+
+    .mac-dock{height:76px;background:transparent;display:flex;align-items:center;justify-content:center;padding-bottom:10px}
+    .dock-icons{display:flex;gap:20px;padding:8px 16px;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+    .dock-icons .dock-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 10px;border-radius:10px;cursor:pointer;color:#e6e6e6;font-weight:600}
+    .dock-icons .dock-btn img{width:38px;height:38px;border-radius:8px}
+    .dock-icons .dock-btn.active{transform:translateY(-6px);filter:brightness(1.15)}
+
+    @media (max-width:640px){
+      .mac-frame{height:720px;flex-direction:column}
+      .dock{width:100%;flex-direction:row;overflow:auto;border-right:none;border-bottom:1px solid rgba(255,255,255,0.02)}
+    }
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+    a.link{color:#9ad0ff;text-decoration:none}
+
+    .logo-container{text-align:center;margin-top:40px}
+    .logo-container img{max-width:120px;height:auto;margin-bottom:12px;}
+    .logo-container h1{font-size:18px;color:#9ad0ff;font-weight:500}
+
+    .body h3{color:#9ad0ff;margin-bottom:12px;}
+    .body ul, .body ol{padding-left:20px; margin-bottom:12px;}
+    .body li{margin-bottom:6px;line-height:1.5}
+    canvas{background:rgba(255,255,255,0.03);border-radius:8px;padding:8px;box-shadow:0 4px 15px rgba(0,0,0,0.4);}
+  </style>
 </head>
 <body>
-
-<div class="top-bar">
-  <div class="top-left">QH Consultant</div>
-  <div class="top-right">
-    <span>🔍</span>
-    <span>🔔</span>
-    <span>⚙️</span>
+<div class="mac-frame">
+  <div class="top-bar">
+    <div class="top-left">
+      <div class="traffic">
+        <span class="red"></span>
+        <span class="yellow"></span>
+        <span class="green"></span>
+      </div>
+      <div class="brand">
+        QH Consultant
+        <small>Consulting & Warehouse Systems</small>
+      </div>
+    </div>
+    <div class="top-right">
+      <div class="sys-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 8.5C6 4.8 11 2.5 17 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/></svg></div>
+      <div class="sys-item"><svg width="16" height="14" viewBox="0 0 24 24" fill="none"><rect x="1" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><rect x="20" y="9" width="2" height="6" rx="1" fill="currentColor"/></svg></div>
+      <div class="sys-item" id="clock">12:00</div>
+    </div>
   </div>
-</div>
 
-<div class="content" id="content">
-  <div class="logo-container">
-      <img src="assets/logo.png" alt="QH Logo" width="120" height="120" style="margin-bottom:15px;">
+  <div class="content-area">
+    <div class="screen">
+      <nav class="dock">
+        <div class="menu-item active" data-key="home"><div class="menu-icon">H</div>HOME</div>
+        <div class="menu-item" data-key="about"><div class="menu-icon">A</div>ABOUT US</div>
+        <div class="menu-item" data-key="team"><div class="menu-icon">T</div>OUR TEAM</div>
+        <div class="menu-item" data-key="what"><div class="menu-icon">W</div>WHAT WE DO</div>
+        <div class="menu-item" data-key="why"><div class="menu-icon">Q</div>Why Choose Us</div>
+      </nav>
 
-    <h1>Your Partner in Smart Consulting</h1>
+      <section class="main">
+        <div class="logo-container" id="home-content">
+          <img src="logo.png" alt="QH Logo"/>
+          <h1>Your Partner in Smart Consulting</h1>
+        </div>
+        <div class="body card" id="page-body" style="display:none"></div>
+      </section>
+    </div>
   </div>
-</div>
 
-<div class="dock">
-  <button onclick="showContent('about')">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4 -4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-    <div>About Us</div>
-  </button>
-  <button onclick="showContent('team')">
-    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.67 0-8 1.34-8 4v2h6v-2c0-.67.33-1.26.84-1.63C7.41 15.23 7.7 15 8 15c.3 0 .59.23.74.37.51.37.84.96.84 1.63v2h6v-2c0-2.66-5.33-4-8-4zm8 0c-.29 0-.56.04-.82.09 1.51.86 2.82 2.02 3.79 3.41.61-.35 1.03-.99 1.03-1.73 0-1.66-3.33-3-4-3z"/></svg>
-    <div>Our Team</div>
-  </button>
-  <button onclick="showContent('what')">
-    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm4 0h14v-2H7v2zM7 19h14v-2H7v2zM3 19h2v-2H3v2zM7 7v2h14V7H7zm-4 2h2V7H3v2z"/></svg>
-    <div>What We Do</div>
-  </button>
-  <button onclick="showContent('why')">
-    <svg viewBox="0 0 24 24"><path d="M12 2L1.5 21h21L12 2zm0 3.84L18.93 19H5.07L12 5.84zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>
-    <div>Why Choose Us</div>
-  </button>
+  <div class="mac-dock">
+    <div class="dock-icons">
+      <button class="dock-btn active" data-key="home">HOME</button>
+      <button class="dock-btn" data-key="about">ABOUT</button>
+      <button class="dock-btn" data-key="team">TEAM</button>
+      <button class="dock-btn" data-key="what">WHAT</button>
+      <button class="dock-btn" data-key="why">WHY</button>
+    </div>
+  </div>
 </div>
 
 <script>
-  function showContent(section) {
-    const content = document.getElementById('content');
-    let html = '';
-    if (section === 'about') {
-      html = `
-        <div>
-          <h1>About Us</h1>
-          <p>Welcome to <strong>QihaiGroup</strong>, your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes.</p>
-          <p>At QihaiGroup, we specialize in two core areas: accounting and IT services. With a team of seasoned professionals and cutting-edge technology, we offer a comprehensive suite of services to meet your unique needs.</p>
-        </div>`;
-    } else if (section === 'team') {
-      html = `
-        <div>
-          <h1>Our Team</h1>
-          <ul>
-            <li><strong>Expertise:</strong> Our team members are experts in their respective fields and continuously enhance their knowledge to stay ahead of the curve.</li>
-            <li><strong>Collaboration:</strong> We believe in the power of teamwork and cooperation, which is essential to achieving our goals.</li>
-            <li><strong>Client-Centric Approach:</strong> Every team member is focused on delivering value to our clients, understanding their unique needs and providing tailored solutions.</li>
-            <li><strong>Innovation:</strong> We foster a culture of innovation and creativity to solve complex problems and drive the company forward.</li>
-          </ul>
-        </div>`;
-    } else if (section === 'what') {
-      html = `
-        <div>
-          <h1>What We Do</h1>
-          <h2>Accounting Services</h2>
-          <p>Our accounting services are designed to streamline your financial operations. Whether you need assistance with bookkeeping, financial & tax reporting, payroll management, business & family financial and tax consulting, personal tax return, or US tax services, our team of experienced accountants ensures accuracy and compliance with industry standards.</p>
-          <h2>IT Services</h2>
-          <p>In an increasingly digital world, IT is the backbone of any successful business. Our IT services cover a wide range of solutions, including network management, cybersecurity, software development, and IT consulting. We provide the technical expertise to keep your operations running smoothly and securely.</p>
-        </div>`;
-    } else if (section === 'why') {
-      html = `
-        <div>
-          <h1>Why Choose Us</h1>
-          <ul>
-            <li><strong>Expert Team:</strong> Our professionals are highly skilled and well-versed in the latest industry trends, ensuring you receive top-notch services.</li>
-            <li><strong>Custom Solutions:</strong> We tailor our services to your specific business needs, providing a personalized approach to every client.</li>
-            <li><strong>Reliability:</strong> We are committed to delivering reliable and timely services to support your business growth.</li>
-            <li><strong>Affordability:</strong> We provide cost-effective solutions to maximize your return on investment.</li>
-          </ul>
-        </div>`;
-    }
-    content.innerHTML = html;
-  }
-</script>
+function updateClock(){
+  const el = document.getElementById('clock');
+  const now = new Date();
+  el.textContent = String(now.getHours()).padStart(2,'0')+":"+String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock,60000);
 
+const pages = {
+  about:{html:`<h3>Welcome to QihaiGroup</h3>
+<p>Your trusted partner in accounting and IT services. We are a dynamic and innovative company dedicated to delivering high-quality financial and technological solutions to businesses of all sizes.</p>
+<p>At QihaiGroup, we specialize in two core areas:</p>
+<ul><li>Accounting</li><li>IT Services</li></ul>
+<canvas id="aboutChart" height="150"></canvas>`},
+  team:{html:`<h3>OUR TEAM</h3>
+<ul>
+<li>Expertise: Our team members are experts in their respective fields and continuously enhance their knowledge to stay ahead of the curve.</li>
+<li>Collaboration: We believe in the power of teamwork and cooperation, essential to achieving our goals.</li>
+<li>Client-Centric Approach: Every team member is focused on delivering value to our clients.</li>
+<li>Innovation: We foster a culture of innovation and creativity to solve complex problems and drive the company forward.</li>
+</ul>
+<canvas id="teamChart" height="150"></canvas>`},
+  what:{html:`<h3>Accounting Services</h3>
+<ul>
+<li>Bookkeeping, financial & tax reporting</li>
+<li>Payroll management</li>
+<li>Business & family financial consultant</li>
+<li>Personal tax return, US tax services</li>
+</ul>
+<h3>IT Services</h3>
+<ul>
+<li>Network management</li>
+<li>Cybersecurity</li>
+<li>Software development</li>
+<li>IT consulting</li>
+</ul>
+<canvas id="whatChart" height="150"></canvas>`},
+  why:{html:`<h3>WHY CHOOSE US</h3>
+<ul>
+<li>Expert Team: Highly skilled and up-to-date.</li>
+<li>Custom Solutions: Tailored to your business.</li>
+<li>Reliability: Timely and dependable services.</li>
+<li>Affordability: Cost-effective solutions.</li>
+</ul>
+<canvas id="whyChart" height="150"></canvas>`}
+};
+
+function setActive(key){
+  document.querySelectorAll('.dock-btn').forEach(b=>b.classList.toggle('active',b.dataset.key===key));
+  document.querySelectorAll('.dock .menu-item').forEach(mi=>mi.classList.toggle('active',mi.dataset.key===key));
+  document.getElementById('home-content').style.display = key==='home'?'block':'none';
+  const bodyEl = document.getElementById('page-body');
+  if(key!=='home'){bodyEl.style.display='block'; bodyEl.innerHTML = pages[key].html; initCharts(key);}
+  else bodyEl.style.display='none';
+}
+document.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('click',()=>setActive(el.dataset.key)));
+setActive('home');
+
+function initCharts(key){
+  if(key==='about'){
+    new Chart(document.getElementById('aboutChart'),{
+      type:'bar',
+      data:{labels:['Accounting','IT Services'], datasets:[{label:'Focus',data:[80,70],backgroundColor:['#9ad0ff','#28ca41']}]},
+      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+    });
+  } else if(key==='team'){
+    new Chart(document.getElementById('teamChart'),{
+      type:'pie',
+      data:{labels:['Expertise','Collaboration','Client-Centric','Innovation'],datasets:[{data:[25,25,25,25],backgroundColor:['#9ad0ff','#28ca41','#ffbd2e','#ff605c']}]},
+      options:{responsive:true}
+    });
+  } else if(key==='what'){
+    new Chart(document.getElementById('whatChart'),{
+      type:'bar',
+      data:{labels:['Bookkeeping','Payroll','Consulting','IT Services'],datasets:[{label:'Services',data:[70,60,80,75],backgroundColor:'#28ca41'}]},
+      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+    });
+  } else if(key==='why'){
+    new Chart(document.getElementById('whyChart'),{
+      type:'doughnut',
+      data:{labels:['Expert Team','Custom Solutions','Reliability','Affordability'],datasets:[{data:[25,25,25,25],backgroundColor:['#9ad0ff','#28ca41','#ffbd2e','#ff605c']}]},
+      options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#e6e6e6'}}}}
+    });
+  }
+}
+</script>
 </body>
 </html>
