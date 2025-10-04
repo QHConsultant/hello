@@ -1,231 +1,26 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mac风格公司页面</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+/* 引入现代字体（放在 <head> 里） */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.dock-btn span {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  bottom: -18px;
+  white-space: nowrap;
+  color: transparent;
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+  transition: all 0.3s ease;
+  opacity: 0.9;
+}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #1e1e1e;
-      color: #f0f0f0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* 顶部状态栏 */
-    .top-bar {
-      height: 28px;
-      background: #111;
-      color: #ccc;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 12px;
-      font-size: 13px;
-    }
-
-    /* 主内容区 */
-    .content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 20px 120px;
-      gap: 50px;
-    }
-
-    .content .logo {
-      max-width: 280px;
-      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
-    }
-
-    .content .text {
-      max-width: 520px;
-    }
-
-    .content h1 {
-      font-size: 40px;
-      margin-bottom: 20px;
-      background: linear-gradient(45deg, #4facfe, #00f2fe);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .content h2 {
-      font-size: 24px;
-      margin-bottom: 15px;
-      color: #ddd;
-    }
-
-    .content p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #bbb;
-    }
-
-    /* Dock 样式 */
-    .dock {
-      position: fixed;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(40, 40, 40, 0.85);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 10px 20px;
-      display: flex;
-      gap: 25px;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
-    }
-
-    .dock-btn {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .dock-btn img {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      transition: transform 0.2s ease;
-    }
-
-    .dock-btn:hover img {
-      transform: scale(1.25);
-    }
-
-    /* 菜单文字渐变 + 光晕 */
-    .dock-btn span {
-      font-size: 12px;
-      font-weight: 600;
-      position: absolute;
-      bottom: -20px;
-      white-space: nowrap;
-      color: transparent;
-      background: linear-gradient(45deg, #4facfe, #00f2fe);
-      -webkit-background-clip: text;
-      background-clip: text;
-      text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
-      transition: all 0.3s ease;
-      opacity: 0.9;
-    }
-
-    .dock-btn:hover span {
-      transform: translateY(-2px) scale(1.1);
-      text-shadow: 0 0 12px rgba(79, 172, 254, 0.6),
-                   0 0 20px rgba(0, 242, 254, 0.5);
-      opacity: 1;
-    }
-
-    /* 响应式 - 平板 */
-    @media (max-width: 1024px) {
-      .content {
-        flex-direction: column;
-        align-items: center;
-        padding: 60px 20px 120px;
-        gap: 30px;
-      }
-      .content .logo {
-        flex: none;
-        max-width: 200px;
-      }
-      .content h1 {
-        font-size: 32px;
-        text-align: center;
-      }
-      .content h2 {
-        font-size: 22px;
-        text-align: center;
-      }
-      .content p {
-        font-size: 16px;
-        text-align: center;
-      }
-    }
-
-    /* 响应式 - 手机 */
-    @media (max-width: 600px) {
-      .top-bar {
-        flex-direction: column;
-        gap: 6px;
-        font-size: 12px;
-        text-align: center;
-      }
-
-      .content {
-        padding: 40px 15px 100px;
-      }
-      .content h1 {
-        font-size: 26px;
-      }
-      .content p {
-        font-size: 15px;
-      }
-
-      .dock {
-        gap: 15px;
-        padding: 8px 14px;
-      }
-      .dock-btn img {
-        width: 38px;
-        height: 38px;
-      }
-      .dock-btn span {
-        font-size: 10px;
-        bottom: -18px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- 顶部状态栏 -->
-  <div class="top-bar">
-    <div>星期五 10月 3日</div>
-    <div>🔋100%</div>
-  </div>
-
-  <!-- 主内容 -->
-  <div class="content">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="logo" alt="公司Logo">
-    <div class="text">
-      <h1>欢迎来到我们的公司</h1>
-      <h2>专注于创新与卓越</h2>
-      <p>我们致力于为客户提供最佳的解决方案，结合前沿技术与行业经验，助力企业实现数字化转型与可持续发展。</p>
-    </div>
-  </div>
-
-  <!-- Dock 菜单 -->
-  <div class="dock">
-    <div class="dock-btn">
-      <img src="https://img.icons8.com/fluency/96/info.png" alt="关于我们">
-      <span>关于我们</span>
-    </div>
-    <div class="dock-btn">
-      <img src="https://img.icons8.com/fluency/96/services.png" alt="产品与服务">
-      <span>产品与服务</span>
-    </div>
-    <div class="dock-btn">
-      <img src="https://img.icons8.com/fluency/96/idea.png" alt="解决方案">
-      <span>解决方案</span>
-    </div>
-    <div class="dock-btn">
-      <img src="https://img.icons8.com/fluency/96/contacts.png" alt="联系我们">
-      <span>联系我们</span>
-    </div>
-  </div>
-</body>
-</html>
+/* hover 效果 */
+.dock-btn:hover span {
+  transform: translateY(-2px) scale(1.1);
+  text-shadow: 0 0 12px rgba(79, 172, 254, 0.6),
+               0 0 20px rgba(0, 242, 254, 0.5);
+  opacity: 1;
+}
